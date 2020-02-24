@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block body%}
+	<center>
+		<div class="content-section">
+			<h1>Oops. Page Not Found (404) </h1>
+			<h1> Parece que la página no existe, intenta con otra url. </h1>
+
+			<img class="sadino" src="{{url_for('static', filename= 'sadino.png')}}">
+		</div>
+	</center>
+
+{% endblock body %}

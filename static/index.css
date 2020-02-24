@@ -1,0 +1,110 @@
+
+.chart-container {
+    position: relative;
+    height:25vh;
+    width:100vw
+
+  }
+
+
+
+.display-3 {
+  font-size: 3.5rem;
+}
+
+.bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+.img-product {
+  max-width: 70%;
+  height: auto;
+}
+
+.card-title {
+  padding-left: 1rem;
+  font-size: 26px;
+
+}
+
+.price-tag {
+  font-size: 44px;
+}
+
+.charto {
+  padding-left: 3rem;
+
+
+}
+
+#wrapper {
+  display: flex;
+
+}
+
+
+.ti .btn-group .dropdown-menu a:hover {
+  background-color: #029ACF !important;
+
+}
+
+.my-md-0 {
+  position:relative;
+  
+
+}
+
+.sadino {
+  padding-top: 10rem;
+  width: 20%;
+  height: auto;
+}
+
+
+/*----Media Queries ---*/
+
+@media (min-width: 768px) {
+
+  .chart-container {
+    height:40vh;
+  }
+
+  .table-responsive {
+
+  }
+
+}
+
+
+@media (min-width: 1000px) {
+
+  .chart-container {
+    height:35vh;
+    width: 50vw;
+  }
+
+  .stats {
+    padding: 30px 30px 30px 30px;
+  }
+
+  .colum {
+    padding: 50px 50px 50px 50px;
+  }
+
+  .img-product {
+  max-width: 110%;
+  height: auto;
+}
+
+}

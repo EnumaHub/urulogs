@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+	{% block body %}
+
+		<h1 align="center">Resultados de búsqueda para {{value}}</h1>
+		<table class="table table-striped">
+			<tr>
+				<th>Nombre</th>				
+				<th>Último cambio</th>
+				<th>Sitio</th>
+				<th>Precio</th>
+			</tr>
+
+
+		
+		{% for objeto in encontrados %}
+			<tr>
+				<td><a href="articulos/{{objeto['nombre']}}">{{objeto['nombre']}}</a></td>
+				<td>{{objeto['precios'][-1]['fecha'].strftime("%d/%m/%y")}}</td>
+				<td>{{objeto['sitio']}}</td>
+				<td>{{objeto['precios'][-1]['precio']}}</td>
+			</tr>
+
+		{% endfor %}
+		</table>
+		
+	{% endblock %}

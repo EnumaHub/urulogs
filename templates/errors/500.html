@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block body%}
+	<center>
+		<div class="content-section">
+			<h1>Oops. Algo salió mal. (500) </h1>
+			<h1> Parece que estamos experimentando problemas técnicos. Por favor intenta de nuevo más tarde. </h1>
+			<img class="sadino" src="{{url_for('static', filename= 'sadino.png')}}">
+			
+		</div>
+	</center>
+
+{% endblock body %}

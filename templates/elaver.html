@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+
+    {% block body %}
+    <table class="table table-striped">
+      <tr>
+        <th>Nombre</th>
+      </tr>
+
+    {% for objeto in todos %}
+      <tr>
+        <td>{{ objeto }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+    {% endblock %}

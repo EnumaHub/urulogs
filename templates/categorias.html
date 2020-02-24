@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+	{% block body %}
+
+
+
+	<table class="table table-striped">
+	 <tr>
+	 	<th>Categorias</th>		
+	 </tr>
+
+
+	 {% for cat in cats %}
+	 <tr>
+	 	<td><a href="categorias/{{cat}}">{{cat}}</a></td>	 	
+	 </tr>
+
+	
+	{% endfor %}
+	</table>
+	
+
+		
+		
+	{% endblock %}
