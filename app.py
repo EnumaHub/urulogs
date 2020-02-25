@@ -192,7 +192,8 @@ def search():
 @app.route('/rebajas')
 def rebajas():
     value = request.args.get('rebaja')
-    value = float(value)
+    if value:
+        value = float(value)
     objetos = data.rebajas(value)
     return render_template('rebajas.html', objetos=objetos, value=value)
 

@@ -2,6 +2,10 @@ import pymongo
 import datetime
 
 
+conn = pymongo.MongoClient(
+            'localhost',
+            27017
+        )
 
 
 
@@ -310,23 +314,31 @@ def fecha_hoy():
     return datetime.datetime.today().strftime("%d/%m/%y")
 
 
-def hacer_descuento(precio, porcentaje):
+def hacer_descuento(precio=0, porcentaje=0):
     percent = precio * porcentaje / 100
     precio = precio - percent
     return int(precio)
 
 
+
+def contiene_coma(palabra):
+    return ["," in palabra for p in palabra]
+
+def contiene_punto(palabra):
+    return ["." in palabra for p in palabra]
+
+
+
 def rebajas(porcentaje=0):
-    #porcentaje = 30
+    if not porcentaje:
+        porcentaje = 0
     #procentaje = int(porcentaje)
 
     todos = display_todos()
     #DD = datetime.timedelta(days=dias)
     #hoy = datetime.datetime.today()
     #resta_fechas = hoy - DD
-    Objetos = []
-
-    
+    Objetos = []    
     
     for objeto in todos:        
         if len(objeto['precios']) > 1:                                
@@ -335,39 +347,47 @@ def rebajas(porcentaje=0):
             if porcentaje == 0:
                 if penultimo_precio > objeto['precios'][-1]['precio']:
                     Objetos.append(objeto)
-            #elif procentaje == 30:
+            
 
             else:
                 penultimo_precio = penultimo_precio.split('$', 1)[1]
-                try:
-                    penultimo_precio = float(penultimo_precio.replace(',', '.'))
-                except ValueError:
-                    penultimo_precio = "".join(penultimo_precio.split('.', 2)[:-1])
-                #penultimo_precio = float(penultimo_precio.replace(',', '.'))
 
+                penultimo_precio = str(penultimo_precio)
+                if contiene_punto(penultimo_precio):
+                    penultimo_precio = "".join(penultimo_precio.split(',', 2)[:1])
+                    penultimo_precio = penultimo_precio.replace(".", "")
+                    penultimo_precio = int(penultimo_precio)                                
+                else:
+                    penultimo_precio = penultimo_precio.replace(",","")
+                    penultimo_precio = penultimo_precio.replace(".","")
+                    penultimo_precio = int(penultimo_precio)                                                 
 
                 ultimo_precio = objeto['precios'][-1]['precio']
                 ultimo_precio = ultimo_precio.split('$', 1)[1]
-                try:
-                    ultimo_precio = float(ultimo_precio.replace(',', '.'))
-                except ValueError:
-                    ultimo_precio = "".join(ultimo_precio.split('.', 2)[:-1])
-                ultimo_precio = float(ultimo_precio)
-                penultimo_precio = float(penultimo_precio)
+
+                ultimo_precio = str(ultimo_precio)
+                if contiene_punto(ultimo_precio):
+                    ultimo_precio = "".join(ultimo_precio.split(',', 2)[:1])
+                    ultimo_precio = ultimo_precio.replace(".", "")
+                                                  
+                else:
+                    ultimo_precio = ultimo_precio.replace(",","")
+                    ultimo_precio = ultimo_precio.replace(".","")
+                    
+                
+                ultimo_precio = int(ultimo_precio)  
+                
                 rebaja_hecha = hacer_descuento(penultimo_precio, porcentaje)
-                if int(rebaja_hecha) >= ultimo_precio:
+                rebaja_hecha_10 = hacer_descuento(penultimo_precio, (porcentaje+9.0))
+                if (porcentaje < 40.0) and (rebaja_hecha >= ultimo_precio) and (rebaja_hecha_10 < ultimo_precio):
+                    Objetos.append(objeto)
+                elif (rebaja_hecha >= ultimo_precio):
                     Objetos.append(objeto)
 
 
 
 
     return Objetos
-
-
-def contiene_coma(palabra):
-    return ["," in palabra for p in palabra]
-
-
 
 
 def get_historial_precios(nombre):
@@ -424,42 +444,39 @@ def get_historial_precios(nombre):
                         for precios in articulo['precios']:                            
                             precios_articulo.append(precios['precio'])
                             fecha_historial_precios.append(precios['fecha'].strftime("%d/%m/%y"))
-                        historial_precios_tiendainglesa = historial_precios.copy()
+                        #historial_precios_tiendainglesa = historial_precios.copy()
                         #Le quita el $ y el espacio en blanco al precio para poder graficar
                         historial_precios = [i.split('$', 1)[1] for i in precios_articulo]
                         historial_precios = [i.strip() for i in historial_precios]
+                        for x in historial_precios:
+                            if contiene_punto(x):
+                                x = "".join(x.split(',', 2)[:1])
+                                x = x.replace(".", "")
+                                x = int(x)
+                                historial_precios_punto.append(x)
+                            else:
+                                x = x.replace(",","")
+                                x = x.replace(".","")
+                                x = int(x) 
+                                historial_precios_punto.append(x)
+                        historial_precios_tiendainglesa = historial_precios_punto.copy()
                         #Le reemplaza la coma por el punto porque la grafica se confunde sino
-                        for q in historial_precios:
-                            historial_precios_punto.append(q.rsplit(',', maxsplit=1)[0])
+                        #for q in historial_precios:
+                         #   historial_precios_punto.append(q)
 
                         max = 0   
-                        min = float(historial_precios_punto[0])
+                        min = (historial_precios_punto[0])
                         idxmin = 0  
-                        idxmax = 0                                           
-                        if contiene_coma(historial_precios[0]):
-                            for num in historial_precios_punto:                                
-                                if float(num) >= max:                                    
-                                    max = float(num)
-                                    idxmax = historial_precios_punto.index(num)
-                                
-                                if float(num) < min:                                    
-                                    min = float(num)
-                                    idxmin = historial_precios_punto.index(num)
-                            fecha_precio_max = fecha_historial_precios[idxmax]
-                            fecha_precio_min = fecha_historial_precios[idxmin]
-                            return historial_precios_punto, fecha_historial_precios, max, min, fecha_precio_max, fecha_precio_min
-                        else:
-                            idxmin = 0  
-                            idxmax = 0 
-                            min = int(historial_precios_tiendainglesa[0])
-                            min = int(num)
-                            for num in historial_precios_tiendainglesa:                                
-                                if int(num) >= max:
-                                    max = int(num)
-                                    idxmax = historial_precios_tiendainglesa.index(num)
-                                if int(num) < min:
-                                    
-                                    idxmin = historial_precios_tiendainglesa.index(num)
-                            fecha_precio_max = fecha_historial_precios[idxmax]
-                            fecha_precio_min = fecha_historial_precios[idxmin]
-                            return historial_precios_tiendainglesa, fecha_historial_precios, max, min, fecha_precio_max, fecha_precio_min
+                        idxmax = 0                                                                   
+                        for num in historial_precios_punto:                                
+                            if (num) >= max:                                    
+                                max = (num)
+                                idxmax = historial_precios_punto.index(num)
+                            
+                            if (num) < min:                                    
+                                min = (num)
+                                idxmin = historial_precios_punto.index(num)
+                        fecha_precio_max = fecha_historial_precios[idxmax]
+                        fecha_precio_min = fecha_historial_precios[idxmin]
+                        return historial_precios_punto, fecha_historial_precios, max, min, fecha_precio_max, fecha_precio_min
+                        
