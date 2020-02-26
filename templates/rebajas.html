@@ -3,44 +3,74 @@
 	{% block body %}
 
 
-	<h1 align="center">Articulos Rebajados</h1>
+	<h1  align="center">Articulos Rebajados</h1>
 
-	<form class="form-inline my-2 my-md-0" method="GET" action="http://127.0.0.1:5000/rebajas" >
-		<button type="submit" name="rebaja" value="10" id="rebaja" class="form-control btn btn-outline-success">10%</button>
-	</form>
-	
-	<form class="form-inline my-2 my-md-0" method="GET" action="http://127.0.0.1:5000/rebajas" >
-		<button type="submit" name="rebaja" value="20" id="rebaja" class="form-control btn btn-outline-success">20%</button>
-	</form>
-
-	<form class="form-inline my-2 my-md-0" method="GET" action="http://127.0.0.1:5000/rebajas" >
-		<button type="submit" name="rebaja" value="30" id="rebaja" class="form-control btn btn-outline-success">30%</button>
-	</form>
-
-	<form class="form-inline my-2 my-md-0" method="GET" action="http://127.0.0.1:5000/rebajas" >
-		<button type="submit" name="rebaja" value="40" id="rebaja" class="form-control btn btn-outline-success">>40%</button>
-	</form>
-
-		<table class="table table-striped">
-			<tr>
-				<th>Nombre</th>				
-				<th>Último cambio</th>
-				<th>Sitio</th>
-				<th>Precio</th>
-			</tr>
+	<div class="row-sm-md-lg-6 rangos">
+	  <p> Aquí encontrarás los precios que han bajado de precio. 
+	  Esta lista se puede filtrar por rango de descuento, pruébala!</p>
+	</div>
 
 
-		
-		{% for objeto in objetos %}
-			<tr>
-				<td><a href="articulos/{{objeto['nombre']}}">{{objeto['nombre']}}</a></td>
-				<td>{{objeto['precios'][-1]['fecha'].strftime("%d/%m/%y")}}</td>
-				<td>{{objeto['sitio']}}</td>
-				<td>{{objeto['precios'][-1]['precio']}}</td>
-			</tr>
+	<div class="container">
+     <div class="row mb-6 rangos">
+      <div class="col-sm-md-lg-2">
+		<form class="form-inline my-2 my-md-0 discount_page" method="GET" action="http://127.0.0.1:5000/rebajas" >
+			<button type="submit" name="rebaja" value="1" id="rebaja" class="form-control btn btn-outline-success discount-button"><10%</button>
+		</form>
+	  </div>
 
-		{% endfor %}
-		</table>
+	  <div class="col-sm-md-lg-2">
+		<form class="form-inline my-2 my-md-0 discount_page" method="GET" action="http://127.0.0.1:5000/rebajas" >
+			<button type="submit" name="rebaja" value="10" id="rebaja" class="form-control btn btn-outline-success discount-button">~10%</button>
+		</form>
+	  </div>
+
+	  <div class="col-sm-md-lg-2">			
+		<form class="form-inline my-2 my-md-0 discount_page" method="GET" action="http://127.0.0.1:5000/rebajas" >
+			<button type="submit" name="rebaja" value="20" id="rebaja" class="form-control btn btn-outline-success discount-button">~20%</button>
+		</form>
+	  </div>
+
+	  <div class="col-sm-md-lg-2">
+		<form class="form-inline my-2 my-md-0 discount_page" method="GET" action="http://127.0.0.1:5000/rebajas" >
+			<button type="submit" name="rebaja" value="30" id="rebaja" class="form-control btn btn-outline-success discount-button">~30%</button>
+		</form>
+	  </div>
+
+	  <div class="col-sm-md-lg-2">
+		<form class="form-inline my-2 my-md-0 discount_page" method="GET" action="http://127.0.0.1:5000/rebajas" >
+			<button type="submit" name="rebaja" value="40" id="rebaja" class="form-control btn btn-outline-success discount-button">>40%</button>
+		</form>	
+	  </div>
+
+	 	  
+	 </div>
+	</div> 
+
+		<div class="table table-responsive w-100 d-block d-md-table discount_page">
+			<table class="table table-sm-md-lg table-striped">
+				<tr>
+					<th>Nombre</th>				
+					<th>Último cambio</th>
+					<th>Sitio</th>
+					<th>Precio</th>
+					<th>Descuento</th>
+				</tr>
+
+
+			
+			{% for objeto, descuento in lista1 %}
+				<tr>
+					<td><a href="articulos/{{objeto['nombre']}}">{{objeto['nombre']}}</a></td>
+					<td>{{objeto['precios'][-1]['fecha'].strftime("%d/%m/%y")}}</td>
+					<td>{{objeto['sitio']}}</td>
+					<td>{{objeto['precios'][-1]['precio']}}</td>
+					<td>% {{descuento}}</td>
+				</tr>
+
+			{% endfor %}
+			</table>
+		</div>
 
 		
 

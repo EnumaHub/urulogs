@@ -6,7 +6,37 @@
 
   }
 
+.discount-button {
+    width: 70px;
+    height: 30px;
+    margin: 5px; 
+}
 
+.rangos {
+  text-align: center;
+  display: flex; 
+  justify-content: center;
+}
+
+.discount_page {
+  font-size: 0.78rem;
+}
+
+.discount_page th, .discount_page td {
+  padding: 0.35rem;
+}
+ 
+.navb {
+  padding-right: 10px;
+}
+
+.navbar { 
+  padding: 0.3rem 1rem 0 1rem ;  
+}
+
+.btn {
+  padding: 0.19rem 0.5rem;
+}
 
 .display-3 {
   font-size: 3.5rem;
@@ -59,10 +89,8 @@
 
 }
 
-.my-md-0 {
+.bar {
   position:relative;
-  
-
 }
 
 .sadino {
@@ -72,22 +100,51 @@
 }
 
 
+
 /*----Media Queries ---*/
 
 @media (min-width: 768px) {
+
+  .discount_page {
+  font-size: 0.9rem;
+  }
+
+  .discount_page th, .discount_page td {
+  padding: 0.754rem;
+  }
+  
 
   .chart-container {
     height:40vh;
   }
 
-  .table-responsive {
+  
 
+  .bar {
+    margin-left: 9rem;
   }
 
 }
 
 
 @media (min-width: 1000px) {
+  .bar {  
+  left: 350px;
+  }
+
+
+  .btn-success {
+    margin-right: 1.5rem;
+   
+  }
+
+  .discount_page {
+  font-size: 0.9rem;
+  }
+
+  .discount_page th, .discount_page td {
+  padding: 0.754rem;
+  }
 
   .chart-container {
     height:35vh;

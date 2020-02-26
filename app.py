@@ -3,10 +3,14 @@ import pymongo
 from flask_paginate import Pagination, get_page_args
 import data
 from errors.handlers import errors
+import jinja2
 
 
 app = Flask(__name__, static_url_path="/static", static_folder='static')
 app.register_blueprint(errors)
+
+app.jinja_env.globals.update(zip=zip)
+
 
 
 
@@ -119,7 +123,7 @@ def disco_categoria(categoria):
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
 
-    per_page = 13
+    
     total = len(categorias)
     pagination_objetos = get_objetos(offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=total,
@@ -143,7 +147,7 @@ def ti_categoria(categoria):
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
 
-    per_page = 13
+    
     total = len(categorias)
     pagination_objetos = get_objetos(offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=total,
@@ -166,7 +170,7 @@ def categoria(categoria):
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
 
-    per_page = 13
+    
     total = len(cat_productos)
     pagination_objetos = get_objetos(offset=offset, per_page=per_page)
     pagination = Pagination(page=page, per_page=per_page, total=total,
@@ -194,8 +198,11 @@ def rebajas():
     value = request.args.get('rebaja')
     if value:
         value = float(value)
-    objetos = data.rebajas(value)
-    return render_template('rebajas.html', objetos=objetos, value=value)
+    objetos, descuentos = data.rebajas(value)
+    lista1 = list(zip(objetos, descuentos))
+
+
+    return render_template('rebajas.html', objetos=objetos, descuentos=descuentos, value=value, lista1=lista1)
 
 
 

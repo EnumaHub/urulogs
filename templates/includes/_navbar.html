@@ -2,9 +2,12 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
   </button>
+
+
     
     <div class="container">
       <a class="navbar-brand" href="/">Home</a>
+      <a href="http://127.0.0.1:5000/rebajas"><button type="button" class="btn btn-success">Rebajas</button></a>
       <div class="btn-group mr-4">
         <button type="button" class="btn btn-primary" onclick="window.location.href = '/disco';">Disco</button>         
         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,13 +47,12 @@
       </div>
       <div class="collapse navbar-collapse" id="navbarsExample07">
        
-        <form class="form-inline my-2 my-md-0" method="GET" action="http://127.0.0.1:5000/search" >
+        <form class="form-inline my-2 my-md-0 bar" method="GET" action="http://127.0.0.1:5000/search" >
           <input class="form-control" type="text" name="query" id="query" placeholder="Buscar">
         </form>
       </div>    
     </div> 
 </nav>
-
 
 
 

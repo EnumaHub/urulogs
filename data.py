@@ -2,10 +2,7 @@ import pymongo
 import datetime
 
 
-conn = pymongo.MongoClient(
-            'localhost',
-            27017
-        )
+
 
 
 
@@ -251,7 +248,7 @@ def display_todos():
     todos_ti = list_colecciones_tiendainglesa()
     for coleccion in todos_disco:
         coleccion = display_disco(coleccion)
-        Objetos += coleccion.find({})   
+        Objetos += coleccion.find({})
     for coleccion in todos_ti:
         coleccion = display_tiendainglesa(coleccion)
         Objetos += coleccion.find({})
@@ -319,6 +316,14 @@ def hacer_descuento(precio=0, porcentaje=0):
     precio = precio - percent
     return int(precio)
 
+def discount_percentage(penultimo_precio, precio_actual):
+    try:
+        percent_discount = abs(int(precio_actual / penultimo_precio * 100) - 100)
+    except ZeroDivisionError:
+        percent_discount = 100
+    return percent_discount
+
+
 
 
 def contiene_coma(palabra):
@@ -333,61 +338,65 @@ def rebajas(porcentaje=0):
     if not porcentaje:
         porcentaje = 0
     #procentaje = int(porcentaje)
-
+#.sort('precios.precio', pymongo.ASCENDING)
     todos = display_todos()
+    
+
     #DD = datetime.timedelta(days=dias)
     #hoy = datetime.datetime.today()
     #resta_fechas = hoy - DD
-    Objetos = []    
+    Objetos = [] 
+    Descuentos = []   
     
     for objeto in todos:        
         if len(objeto['precios']) > 1:                                
             penultimo_precio = objeto['precios'][-2]['precio']
             penultimo_fecha = objeto['precios'][-2]['fecha']
-            if porcentaje == 0:
-                if penultimo_precio > objeto['precios'][-1]['precio']:
-                    Objetos.append(objeto)
-            
-
+            penultimo_precio = penultimo_precio.split('$', 1)[1]
+            penultimo_precio = str(penultimo_precio)
+            if contiene_punto(penultimo_precio):
+                penultimo_precio = "".join(penultimo_precio.split(',', 2)[:1])
+                penultimo_precio = penultimo_precio.replace(".", "")
+                penultimo_precio = int(penultimo_precio)                                
             else:
-                penultimo_precio = penultimo_precio.split('$', 1)[1]
+                penultimo_precio = penultimo_precio.replace(",","")
+                penultimo_precio = penultimo_precio.replace(".","")
+                penultimo_precio = int(penultimo_precio)                                                 
 
-                penultimo_precio = str(penultimo_precio)
-                if contiene_punto(penultimo_precio):
-                    penultimo_precio = "".join(penultimo_precio.split(',', 2)[:1])
-                    penultimo_precio = penultimo_precio.replace(".", "")
-                    penultimo_precio = int(penultimo_precio)                                
-                else:
-                    penultimo_precio = penultimo_precio.replace(",","")
-                    penultimo_precio = penultimo_precio.replace(".","")
-                    penultimo_precio = int(penultimo_precio)                                                 
+            ultimo_precio = objeto['precios'][-1]['precio']
+            ultimo_precio = ultimo_precio.split('$', 1)[1]
 
-                ultimo_precio = objeto['precios'][-1]['precio']
-                ultimo_precio = ultimo_precio.split('$', 1)[1]
-
-                ultimo_precio = str(ultimo_precio)
-                if contiene_punto(ultimo_precio):
-                    ultimo_precio = "".join(ultimo_precio.split(',', 2)[:1])
-                    ultimo_precio = ultimo_precio.replace(".", "")
-                                                  
-                else:
-                    ultimo_precio = ultimo_precio.replace(",","")
-                    ultimo_precio = ultimo_precio.replace(".","")
-                    
+            ultimo_precio = str(ultimo_precio)
+            if contiene_punto(ultimo_precio):
+                ultimo_precio = "".join(ultimo_precio.split(',', 2)[:1])
+                ultimo_precio = ultimo_precio.replace(".", "")
+                                              
+            else:
+                ultimo_precio = ultimo_precio.replace(",","")
+                ultimo_precio = ultimo_precio.replace(".","")
                 
-                ultimo_precio = int(ultimo_precio)  
+            
+            ultimo_precio = int(ultimo_precio)  
                 
+            if porcentaje == 0:
+                if penultimo_precio > ultimo_precio:
+                    Objetos.append(objeto)
+                    descuento_objeto = discount_percentage(penultimo_precio, ultimo_precio)
+                    Descuentos.append(descuento_objeto)
+            else:                
                 rebaja_hecha = hacer_descuento(penultimo_precio, porcentaje)
                 rebaja_hecha_10 = hacer_descuento(penultimo_precio, (porcentaje+9.0))
-                if (porcentaje < 40.0) and (rebaja_hecha >= ultimo_precio) and (rebaja_hecha_10 < ultimo_precio):
+                if (rebaja_hecha >= ultimo_precio) and (rebaja_hecha_10 < ultimo_precio):
                     Objetos.append(objeto)
-                elif (rebaja_hecha >= ultimo_precio):
+                    descuento_objeto = discount_percentage(penultimo_precio, ultimo_precio)
+                    Descuentos.append(descuento_objeto)
+                elif (porcentaje >= 40.0) and (rebaja_hecha >= ultimo_precio):
                     Objetos.append(objeto)
+                    descuento_objeto = discount_percentage(penultimo_precio, ultimo_precio)
+                    Descuentos.append(descuento_objeto)
 
 
-
-
-    return Objetos
+    return Objetos, Descuentos
 
 
 def get_historial_precios(nombre):
