@@ -2,7 +2,10 @@ import pymongo
 import datetime
 
 
-
+conn = pymongo.MongoClient(
+            'localhost',
+            27017
+        )
 
 
 

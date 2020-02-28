@@ -1,37 +1,34 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-  </button>
+<div class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">  
+  <div class="container">
 
-
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+    </button>
     
-    <div class="container">
-      <a class="navbar-brand" href="/">Home</a>
-      <a href="http://127.0.0.1:5000/rebajas"><button type="button" class="btn btn-success">Rebajas</button></a>
-      <div class="btn-group mr-4">
-        <button type="button" class="btn btn-primary" onclick="window.location.href = '/disco';">Disco</button>         
-        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="/disco/Carne">Carne</a>
-          <a class="dropdown-item" href="/disco/Lacteos">Lacteos</a>
-          <a class="dropdown-item" href="/disco/FrutYVerd">FrutYVerd</a>
-          <a class="dropdown-item" href="/disco/Fiambres">Fiambres</a>
-          <a class="dropdown-item" href="/disco/Quesos">Quesos</a>
-          <a class="dropdown-item" href="/disco/Pastas">Pastas</a>
-          <a class="dropdown-item" href="/disco/Canasta">Canasta</a>
-          <a class="dropdown-item" href="/disco/Mascotas">Mascotas</a>
-          <a class="dropdown-item" href="/disco/Perfumeria">Perfumeria y Limpieza</a>       
-        </div>
-      </div>
-      <div class="ti">
-        <div class="btn-group mr-3">
-          <button type="button" class="btn btn-info" onclick="window.location.href = '/tiendainglesa';">Tienda Inglesa</button>         
-          <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <div class="dropdown-menu">
+     <div class="collapse navbar-collapse" id="navbarResponsive">       
+        <ul class="navbar-nav">
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/disco" id="themes">Disco <span class="caret"></span></a>
+          <div class="dropdown-menu" aria-labelledby="themes">
+            <a class="dropdown-item" href="/disco">Disco</a>        
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/disco/Carne">Carne</a>
+            <a class="dropdown-item" href="/disco/Lacteos">Lacteos</a>
+            <a class="dropdown-item" href="/disco/FrutYVerd">FrutYVerd</a>
+            <a class="dropdown-item" href="/disco/Fiambres">Fiambres</a>
+            <a class="dropdown-item" href="/disco/Quesos">Quesos</a>
+            <a class="dropdown-item" href="/disco/Pastas">Pastas</a>
+            <a class="dropdown-item" href="/disco/Canasta">Canasta</a>
+            <a class="dropdown-item" href="/disco/Mascotas">Mascotas</a>
+            <a class="dropdown-item" href="/disco/Perfumeria">Perfumeria y Limpieza</a>       
+          </div>
+         </li>
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/tiendainglesa" id="themes">Tienda Inglesa <span class="caret"></span></a>
+          <div class="dropdown-menu" aria-labelledby="themes">
+            <a class="dropdown-item" href="/tiendainglesa">Tienda Inglesa</a>        
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/tiendainglesa/Carne">Carne</a>
             <a class="dropdown-item" href="/tiendainglesa/Lacteos">Lacteos</a>
             <a class="dropdown-item" href="/tiendainglesa/FrutYVerd">FrutYVerd</a>
@@ -43,16 +40,29 @@
             <a class="dropdown-item" href="/tiendainglesa/Perfumeria">Perfumeria</a> 
             <a class="dropdown-item" href="/tiendainglesa/Limpieza">Limpieza</a> 
           </div>
-        </div>
-      </div>
-      <div class="collapse navbar-collapse" id="navbarsExample07">
-       
-        <form class="form-inline my-2 my-md-0 bar" method="GET" action="http://127.0.0.1:5000/search" >
+         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/rebajas">Rebajas</a>
+        </li>
+      
+
+        
+      
+      
+        <form class="form-inline my-2 my-md-0 bar" method="GET" action="/search" >
           <input class="form-control" type="text" name="query" id="query" placeholder="Buscar">
         </form>
-      </div>    
-    </div> 
-</nav>
+      
+    </ul>
+    </div>
+  </div> 
+  </div> 
+  </div> 
+
+
+
+
 
 
 
